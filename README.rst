@@ -16,10 +16,10 @@ backtrader
    :alt: License
    :scale: 100%
    :target: https://github.com/backtrader/backtrader/blob/master/LICENSE
-.. image:: https://travis-ci.org/backtrader/backtrader.png?branch=master
+.. image:: https://travis-ci.org/dima/backtrader.png?branch=master
    :alt: Travis-ci Build Status
    :scale: 100%
-   :target: https://travis-ci.org/backtrader/backtrader
+   :target: https://travis-ci.org/dima/backtrader
 .. image:: https://img.shields.io/pypi/pyversions/backtrader.svg
    :alt: Python versions
    :scale: 100%

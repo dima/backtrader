@@ -7,34 +7,23 @@ import logging
 from array import array
 import backtrader as bt
 
-try:
-    from bokeh.models import ColumnDataSource, Model, Paragraph
-    from bokeh.models.widgets import Panel, Tabs, DataTable, TableColumn
-    from bokeh.layouts import column, gridplot, row
-    from bokeh.server.server import Server
-    from bokeh.document import Document
-    from bokeh.application import Application
-    from bokeh.application.handlers.function import FunctionHandler
-    from bokeh.embed import file_html
-    from bokeh.models.widgets import NumberFormatter, StringFormatter
-    from bokeh.resources import CDN
-    from bokeh.util.browser import view
+from jinja2 import Environment, PackageLoader
+from bokeh.models import ColumnDataSource, Model, Paragraph
+from bokeh.models.widgets import Panel, Tabs, DataTable, TableColumn
+from bokeh.layouts import column, gridplot, row
+from bokeh.server.server import Server
+from bokeh.document import Document
+from bokeh.application import Application
+from bokeh.application.handlers.function import FunctionHandler
+from bokeh.embed import file_html
+from bokeh.models.widgets import NumberFormatter, StringFormatter
+from bokeh.resources import CDN
+from bokeh.util.browser import view
 
-    from .figure import Figure, HoverContainer
-    from .datatable import TableGenerator
-    from .schemes import Tradimo
-    from .schemes.scheme import Scheme
-
-except ImportError as e:
-    raise ImportError(
-        'Bokeh seems to be missing. Needed for bokeh plotting support')
-
-try:
-    from jinja2 import Environment, PackageLoader
-except ImportError as e:
-    raise ImportError(
-        'jinja2 seems to be missing. Needed for bokeh plotting support')
-
+from .figure import Figure, HoverContainer
+from .datatable import TableGenerator
+from .schemes import Tradimo
+from .schemes.scheme import Scheme
 from .utils import generate_stylesheet, get_strategy_label, get_data_obj
 
 

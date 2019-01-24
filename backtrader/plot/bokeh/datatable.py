@@ -3,10 +3,7 @@ from collections import OrderedDict
 from enum import Enum
 from .utils import get_params_str
 
-try:
-    from bokeh.models import ColumnDataSource, Paragraph, TableColumn, DataTable, DateFormatter, NumberFormatter, StringFormatter, Widget
-except ImportError as e:
-    raise ImportError('Bokeh seems to be missing. Needed for bokeh plotting support')
+from bokeh.models import ColumnDataSource, Paragraph, TableColumn, DataTable, DateFormatter, NumberFormatter, StringFormatter, Widget
 
 
 class ColummDataType(Enum):

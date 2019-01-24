@@ -4,20 +4,9 @@ import math
 import numbers
 import logging
 
-try:
-    from jinja2 import Environment, PackageLoader
-except ImportError:
-    raise ImportError('jinja2 seems to be missing. Needed for bokeh plotting support')
-
-try:
-    import pandas
-except ImportError:
-    raise ImportError('Pandas seems to be missing. Needed for bokeh plotting support')
-
-try:
-    import matplotlib.colors
-except ImportError:
-    raise ImportError('matplotlib seems to be missing. Needed for bokeh plotting support')
+import matplotlib.colors
+from jinja2 import Environment, PackageLoader
+import pandas
 
 
 _logger = logging.getLogger(__name__)

@@ -27,6 +27,7 @@ from .errors import *
 from . import errors as errors
 
 from .utils import num2date, date2num, time2num, num2time
+from .utils import is_btresult, is_optresult, is_ordered_optresult
 
 from .linebuffer import *
 from .functions import *
@@ -89,15 +90,3 @@ from . import talib as talib
 import backtrader.indicators.contrib
 import backtrader.studies.contrib
 
-def is_btresult(result):
-    return isinstance(result, list) and isinstance(result[0], Strategy) and len(result) > 0
-
-def is_optresult(result):
-    return isinstance(result, list) and \
-           isinstance(result[0], list) and \
-           len(result[0]) > 0 and \
-           isinstance(result[0][0], (OptReturn, Strategy)) and \
-           len(result) > 0
-
-def is_ordered_optresult(result):
-    return isinstance(result, OrderedOptResult)

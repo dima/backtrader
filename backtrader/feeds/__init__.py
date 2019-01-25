@@ -35,12 +35,12 @@ from .pandafeed import *
 try:
     from .influxfeed import *
 except ImportError:
-    pass
+    pass # The user may not have something installed
 
 try:
     from .ibdata import *
 except ImportError:
-    pass
+    pass # The user may not have something installed
 
 try:
     from .vcdata import *
@@ -52,6 +52,13 @@ try:
 except ImportError:
     pass  # The user may not have something installed
 
+import sys
+sysver = sys.version_info
+if sysver.major >= 3 and sysver.minor > 4:
+	try:
+	    from .alpacadata import AlpacaData
+	except ImportError:
+	    pass  # The user may not have something installed
 
 from .vchartfile import VChartFile
 

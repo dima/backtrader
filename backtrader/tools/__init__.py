@@ -26,3 +26,4 @@ from .yahoodownload import yahoodownload
 from .ibdownload import ibdownload
 from .influximport import influximport
 from .btrewrite import btrewrite
+from .alpacadownload import alpacadownload

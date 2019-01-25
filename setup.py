@@ -135,6 +135,7 @@ setuptools.setup(
         'btrun=backtrader.tools:btrun',
         'yahoodownload=backtrader.tools:yahoodownload', 
         'ibdownload=backtrader.tools:ibdownload',
+        'alpacadownload=backtrader.tools:alpacadownload', 
         'influximport=backtrader.tools:influximport',
         'btrewrite=backtrader.tools:btrewrite'
     ]},

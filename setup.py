@@ -2,7 +2,7 @@
 # -*- coding: utf-8; py-indent-offset:4 -*-
 ###############################################################################
 #
-# Copyright (C) 2015, 2016 Daniel Rodriguez
+# Copyright (C) 2015-2020 Daniel Rodriguez
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -100,7 +100,6 @@ setuptools.setup(
     # packages=['backtrader', '],
     package_data={'backtrader.plot.bokeh': ['templates/*.j2']},
 
-
     # List run-time dependencies here.
     # These will be installed by pip when your
     # project is installed. For an analysis of "install_requires" vs pip's
@@ -113,7 +112,7 @@ setuptools.setup(
     # You can install these using the following syntax, for example:
     # $ pip install -e .[dev,test]
     extras_require={
-        'plotting':  ['matplotlib', 'bokeh', 'jinja2'],
+        'plotting':  ['matplotlib', 'bokeh', 'jinja2', 'pandas'],
     },
 
     # If there are data files included in your packages that need to be
@@ -140,5 +139,5 @@ setuptools.setup(
         'btrewrite=backtrader.tools:btrewrite'
     ]},
 
-    # scripts=[],
+    # scripts=[]
 )

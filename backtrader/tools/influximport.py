@@ -50,9 +50,11 @@ class InfluxDBTool(object):
         if 'adj close' in df.columns:
             df.drop('adj close', axis=1, inplace=True)
         df[['high', 'low', 'open', 'close']] = df[['high', 'low', 'open', 'close']].astype(float)
+        df['volume'].fillna(0, inplace=True)
         df['volume'] = df['volume'].astype(int)
 
         if 'openinterest' in df.columns:
+            df['openinterest'].fillna(0, inplace=True)
             df['openinterest'] = df['openinterest'].astype(int)
 
         # handle separate time column if necessary

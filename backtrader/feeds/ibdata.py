@@ -60,6 +60,7 @@ class IBData(with_metaclass(MetaIBData, DataBase)):
           - TICKER-IND-EXCHANGE-CURRENCY  # Index
 
           - TICKER-YYYYMM-EXCHANGE  # Future
+          - TICKER-CONTFUT-EXCHANGE # Future (Historical Only)
           - TICKER-YYYYMM-EXCHANGE-CURRENCY  # Future
           - TICKER-YYYYMM-EXCHANGE-CURRENCY-MULT  # Future
           - TICKER-FUT-EXCHANGE-CURRENCY-YYYYMM-MULT # Future
@@ -340,7 +341,7 @@ class IBData(with_metaclass(MetaIBData, DataBase)):
         return precon
 
     def start(self):
-        '''Starts the IB connecction and gets the real contract and
+        '''Starts the IB connection and gets the real contract and
         contractdetails if it exists'''
         super(IBData, self).start()
         # Kickstart store and get queue to wait on

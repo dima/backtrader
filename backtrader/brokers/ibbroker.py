@@ -479,9 +479,12 @@ class IBBroker(with_metaclass(MetaIBBroker, BrokerBase)):
 
     def push_commissionreport(self, cr):
         with self._lock_orders:
-            ex = self.executions.pop(cr.m_execId)
-            oid = ex.m_orderId
-            order = self.orderbyid[oid]
+            try:
+                ex = self.executions.pop(cr.m_execId)
+                oid = ex.m_orderId
+                order = self.orderbyid[oid]
+            except (KeyError, AttributeError):
+                return  # no order or no execId in cr
             ostatus = self.ordstatus[oid].pop(ex.m_cumQty)
 
             position = self.getposition(order.data, clone=False)

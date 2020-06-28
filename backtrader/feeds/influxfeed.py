@@ -26,6 +26,9 @@ import backtrader.feed as feed
 from ..utils import date2num
 import datetime as dt
 
+from influxdb import InfluxDBClient as idbclient
+from influxdb.exceptions import InfluxDBClientError
+
 TIMEFRAMES = dict(
     (
         (bt.TimeFrame.Seconds, 's'),
@@ -39,11 +42,6 @@ TIMEFRAMES = dict(
 
 
 class InfluxDB(feed.DataBase):
-    frompackages = (
-        ('influxdb', [('InfluxDBClient', 'idbclient')]),
-        ('influxdb.exceptions', 'InfluxDBClientError')
-    )
-
     params = (
         ('host', '127.0.0.1'),
         ('port', '8086'),
@@ -51,13 +49,12 @@ class InfluxDB(feed.DataBase):
         ('password', None),
         ('database', None),
         ('timeframe', bt.TimeFrame.Days),
-        ('startdate', None),
-        ('high', 'high_p'),
-        ('low', 'low_p'),
-        ('open', 'open_p'),
-        ('close', 'close_p'),
+        ('high', 'high'),
+        ('low', 'low'),
+        ('open', 'open'),
+        ('close', 'close'),
         ('volume', 'volume'),
-        ('ointerest', 'oi'),
+        ('openinterest', 'openinterest'),
     )
 
     def start(self):
@@ -72,34 +69,35 @@ class InfluxDB(feed.DataBase):
             multiple=(self.p.compression if self.p.compression else 1),
             timeframe=TIMEFRAMES.get(self.p.timeframe, 'd'))
 
-        if not self.p.startdate:
-            st = '<= now()'
+        if not self.p.todate:
+            st = 'time <= now()'
         else:
-            st = '>= \'%s\'' % self.p.startdate
+            st = 'time <= \'%s\'' % self.p.todate
 
-        # The query could already consider parameters like fromdate and todate
-        # to have the database skip them and not the internal code
-        qstr = ('SELECT mean("{open_f}") AS "open", mean("{high_f}") AS "high", '
-                'mean("{low_f}") AS "low", mean("{close_f}") AS "close", '
-                'mean("{vol_f}") AS "volume", mean("{oi_f}") AS "openinterest" '
+        if self.p.fromdate:
+            st += ' AND time >= \'%s\'' % self.p.fromdate
+
+        qstr = ('SELECT first("{open_f}") AS "open", max("{high_f}") AS "high", '
+                'min("{low_f}") AS "low", last("{close_f}") AS "close", '
+                'sum("{volume_f}") AS "volume", sum("{openinterest_f}") AS "openinterest" '
                 'FROM "{dataname}" '
-                'WHERE time {begin} '
+                'WHERE {time} '
                 'GROUP BY time({timeframe}) fill(none)').format(
                     open_f=self.p.open, high_f=self.p.high,
                     low_f=self.p.low, close_f=self.p.close,
-                    vol_f=self.p.volume, oi_f=self.p.ointerest,
-                    timeframe=tf, begin=st, dataname=self.p.dataname)
+                    volume_f=self.p.volume, openinterest_f=self.p.openinterest,
+                    timeframe=tf, time=st, dataname=self.p.dataname)
 
         try:
             dbars = list(self.ndb.query(qstr).get_points())
         except InfluxDBClientError as err:
             print('InfluxDB query failed: %s' % err)
 
-        self.biter = iter(dbars)
+        self._rows = iter(dbars)
 
     def _load(self):
         try:
-            bar = next(self.biter)
+            bar = next(self._rows)
         except StopIteration:
             return False
 

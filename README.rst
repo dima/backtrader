@@ -19,7 +19,7 @@ backtrader
    :alt: Travis-ci Build Status
    :scale: 100%
    :target: https://travis-ci.org/backtrader/backtrader
-.. image:: https://img.shields.io/pypi/pyversions/backtrader.svg
+.. image:: https://img.shields.io/pypi/pyversions/backtrader.svg  
    :alt: Python versions
    :scale: 100%
    :target: https://pypi.python.org/pypi/backtrader/
@@ -70,7 +70,7 @@ Live Trading and backtesting platform written in Python.
 
   - Live Data Feed and Trading with
 
-    - Interactive Brokers (needs ``IbPy`` and benefits greatly from an
+    - Interactive Brokers (needs ``IbPy2`` and benefits greatly from an
       installed ``pytz``)
     - *Visual Chart* (needs a fork of ``comtypes`` until a pull request is
       integrated in the release and benefits from ``pytz``)
@@ -98,7 +98,7 @@ Live Trading and backtesting platform written in Python.
   - Cheat-on-Close and Cheat-on-Open modes
   - Schedulers
   - Trading Calendars
-  - Plotting (requires matplotlib)
+  - Plotting (supports 2 backends: matplotlib and bokeh)
 
 Documentation
 =============
@@ -135,19 +135,13 @@ From *pypi*:
 
   - ``pip install backtrader[plotting]``
 
-    If ``matplotlib`` is not installed and you wish to do some plotting
+    If ``matplotlib`` and ``bokeh`` are not installed and you wish to do some plotting
 
 .. note:: The minimum matplotlib version is ``1.4.1``
 
 An example for *IB* Data Feeds/Trading:
 
-  - ``IbPy`` doesn't seem to be in PyPi. Do either::
-
-      pip install git+https://github.com/blampe/IbPy.git
-
-    or (if ``git`` is not available in your system)::
-
-      pip install https://github.com/blampe/IbPy/archive/master.zip
+  -  ``pip install ibpy2``
 
 For other functionalities like: ``Visual Chart``, ``Oanda``, ``TA-Lib``, check
 the dependencies in the documentation.

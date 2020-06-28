@@ -27,6 +27,7 @@ from .errors import *
 from . import errors as errors
 
 from .utils import num2date, date2num, time2num, num2time
+from .utils import is_btresult, is_optresult, is_ordered_optresult
 
 from .linebuffer import *
 from .functions import *

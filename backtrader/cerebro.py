@@ -2,7 +2,7 @@
 # -*- coding: utf-8; py-indent-offset:4 -*-
 ###############################################################################
 #
-# Copyright (C) 2015, 2016, 2017 Daniel Rodriguez
+# Copyright (C) 2015-2020 Daniel Rodriguez
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -43,6 +43,8 @@ from .tradingcal import (TradingCalendarBase, TradingCalendar,
                          PandasMarketCalendar)
 from .timer import Timer
 
+# Defined here to make it pickable. Ideally it could be defined inside Cerebro
+
 
 class OptReturn(object):
     def __init__(self, params, **kwargs):
@@ -60,7 +62,6 @@ class OrderedOptResult:
     def __init__(self, benchmark_label, optresult):
         self.benchmark_label = benchmark_label
         self.optresult = optresult
-
 
 class Cerebro(with_metaclass(MetaParams, object)):
     '''Params:
@@ -982,33 +983,23 @@ class Cerebro(with_metaclass(MetaParams, object)):
         Plots the strategies passed as result, defaults to strategies inside cerebro
 
         If ``results`` is None strategies inside cerebro will be used
-
         If ``plotter`` is None a default ``Plot`` instance is created and
         ``kwargs`` are passed to it during instantiation.
-
         ``numfigs`` split the plot in the indicated number of charts reducing
         chart density if wished (ignored if rendering using Bokeh)
-
         ``iplot``: if ``True`` and running in a ``notebook`` the charts will be
         displayed inline
-
         ``use``: set it to the name of the desired matplotlib backend. It will
         take precedence over ``iplot`` (ignored if rendering using Bokeh)
-
         ``start``: An index to the datetime line array of the strategy or a
         ``datetime.date``, ``datetime.datetime`` instance indicating the start
         of the plot
-
         ``end``: An index to the datetime line array of the strategy or a
         ``datetime.date``, ``datetime.datetime`` instance indicating the end
         of the plot
-
         ``width``: in inches of the saved figure (ignored if rendering using Bokeh)
-
         ``height``: in inches of the saved figure (ignored if rendering using Bokeh)
-
         ``dpi``: quality in dots per inches of the saved figure (ignored if rendering using Bokeh)
-
         ``tight``: only save actual content and not the frame of the figure (ignored if rendering using Bokeh)
         '''
         if self._exactbars > 0:

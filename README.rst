@@ -14,7 +14,7 @@ backtrader
 .. image:: https://img.shields.io/pypi/l/backtrader.svg
    :alt: License
    :scale: 100%
-   :target: https://github.com/backtrader/backtrader/blob/master/LICENSE
+   :target: https://github.com/mementum/backtrader/blob/master/LICENSE
 .. image:: https://travis-ci.org/dima/backtrader.png?branch=master
    :alt: Travis-ci Build Status
    :scale: 100%

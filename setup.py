@@ -103,6 +103,7 @@ setuptools.setup(
     # simple. Or you can use find_packages().
     packages=setuptools.find_packages(exclude=['docs', 'docs2', 'samples']),
     # packages=['backtrader', '],
+    package_data={'backtrader.plot.bokeh': ['templates/*.j2']},
 
     # List run-time dependencies here.
     # These will be installed by pip when your
@@ -110,13 +111,14 @@ setuptools.setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     # install_requires=['six'],
+    install_requires=[],
 
     # List additional groups of dependencies here
     # (e.g. development dependencies).
     # You can install these using the following syntax, for example:
     # $ pip install -e .[dev,test]
     extras_require={
-        'plotting':  ['matplotlib'],
+        'plotting':  ['matplotlib', 'bokeh', 'jinja2', 'pandas'],
     },
 
     # If there are data files included in your packages that need to be
@@ -134,7 +136,13 @@ setuptools.setup(
     # "scripts" keyword. Entry points provide cross-platform support and allow
     # pip to create the appropriate form of executable for the target platform.
     # entry_points={'console_scripts': ['sample=sample:main',],},
-    entry_points={'console_scripts': ['btrun=backtrader.btrun:btrun']},
+    entry_points={'console_scripts': [
+        'btrun=backtrader.tools:btrun',
+        'yahoodownload=backtrader.tools:yahoodownload', 
+        'ibdownload=backtrader.tools:ibdownload',
+        'influximport=backtrader.tools:influximport',
+        'btrewrite=backtrader.tools:btrewrite'
+    ]},
 
-    scripts=['tools/bt-run.py'],
+    # scripts=[]
 )

@@ -2,7 +2,7 @@
 # -*- coding: utf-8; py-indent-offset:4 -*-
 ###############################################################################
 #
-# Copyright (C) 2015-2020 Daniel Rodriguez
+# Copyright (C) 2015, 2016, 2017 Daniel Rodriguez
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,10 +21,17 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-from collections import OrderedDict
-import sys
+import backtrader as bt
 
-from .date import *
-from .ordereddefaultdict import *
-from .autodict import *
-from .bttypes import *
+def is_btresult(result):
+    return isinstance(result, list) and isinstance(result[0], bt.Strategy) and len(result) > 0
+
+def is_optresult(result):
+    return isinstance(result, list) and \
+           isinstance(result[0], list) and \
+           len(result[0]) > 0 and \
+           isinstance(result[0][0], (bt.OptReturn, bt.Strategy)) and \
+           len(result) > 0
+
+def is_ordered_optresult(result):
+    return isinstance(result, bt.OrderedOptResult)

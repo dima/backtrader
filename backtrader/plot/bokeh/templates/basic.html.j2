@@ -1,0 +1,70 @@
+{#
+Renders Bokeh models into a basic .html file.
+
+:param title: value for ``<title>`` tags
+:type title: str
+
+:param plot_resources: typically the output of RESOURCES
+:type plot_resources: str
+
+:param plot_script: typically the output of PLOT_SCRIPT
+:type plot_script: str
+
+:param plot_div: typically the output of PLOT_DIV
+:type plot_div: str
+
+Users can customize the file output by providing their own Jinja2 template
+that accepts these same parameters.
+
+#}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>{{ title }}</title>
+        {{ bokeh_css }}
+        {{ bokeh_js }}
+        {{ stylesheet }}
+        <script> 
+            function waitForAddedNode(params) {
+                new MutationObserver(function(mutations) {
+                    var el = document.querySelectorAll(params.cls);
+                    if (el.length > 0) {
+                        this.disconnect();
+                        params.done(el);
+                    }
+                }).observe(params.parent || document, {
+                    subtree: !!params.recursive,
+                    childList: true,
+                });
+            }
+
+            waitForAddedNode({
+                cls: '.bk-widget',
+                parent: document.querySelector('#dashboard'),
+                recursive: true,
+                done: function(el) {
+                    document.getElementById('dashboard').className = "loaded"
+                    document.getElementById('loading').className = "invisible"
+                }
+            })
+        </script>
+    </head>
+    <body>
+        <div id="loading">
+            <ul class="spinner">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <div id="dashboard">
+            {%if show_headline %}
+                <div id="headline">{{ title }}</div>
+            {%endif%}
+            {{ plot_div|indent(8) }}
+            {{ plot_script|indent(8) }}
+        </div>
+    </body>
+</html>

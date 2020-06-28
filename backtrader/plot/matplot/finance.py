@@ -2,7 +2,7 @@
 # -*- coding: utf-8; py-indent-offset:4 -*-
 ###############################################################################
 #
-# Copyright (C) 2015-2020 Daniel Rodriguez
+# Copyright (C) 2015, 2016, 2017 Daniel Rodriguez
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,12 +21,14 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-from ..utils.py3 import range, zip
+from ...utils.py3 import range, zip
 
 import matplotlib.collections as mcol
 import matplotlib.colors as mcolors
 import matplotlib.legend as mlegend
 import matplotlib.lines as mlines
+import matplotlib.patches as mpatches
+import matplotlib.transforms as mtransforms
 
 from .utils import shade_color
 
@@ -132,9 +134,9 @@ class CandlestickPlotHandler(object):
                       **kwargs):
 
         # Prepack different zips of the series values
-        oc = lambda: zip(opens, closes)  # NOQA: E731
-        xoc = lambda: zip(xs, opens, closes)  # NOQA: E731
-        iohlc = lambda: zip(xs, opens, highs, lows, closes)  # NOQA: E731
+        oc = lambda: zip(opens, closes)
+        xoc = lambda: zip(xs, opens, closes)
+        iohlc = lambda: zip(xs, opens, highs, lows, closes)
 
         colorup = self.colorup if fillup else 'None'
         colordown = self.colordown if filldown else 'None'
@@ -145,7 +147,7 @@ class CandlestickPlotHandler(object):
         edgecolors = [edgecolord[o < c] for o, c in oc()]
 
         tickcolord = {True: self.tickup, False: self.tickdown}
-        tickcolors = [tickcolord[o < c] for o, c in oc()]
+        tickcolors = [edgecolord[o < c] for o, c in oc()]
 
         delta = width / 2 - edgeadjust
 
@@ -311,7 +313,7 @@ class VolumePlotHandler(object):
                       **kwargs):
 
         # Prepare the data
-        openclose = lambda: zip(opens, closes)  # NOQA: E731
+        openclose = lambda: zip(opens, closes)
 
         # Calculate bars colors
         colord = {True: self.colorup, False: self.colordown}
@@ -435,10 +437,10 @@ class OHLCPlotHandler(object):
                       **kwargs):
 
         # Prepack different zips of the series values
-        ihighlow = lambda: zip(xs, highs, lows)  # NOQA: E731
-        iopen = lambda: zip(xs, opens)  # NOQA: E731
-        iclose = lambda: zip(xs, closes)  # NOQA: E731
-        openclose = lambda: zip(opens, closes)  # NOQA: E731
+        ihighlow = lambda: zip(xs, highs, lows)
+        iopen = lambda: zip(xs, opens)
+        iclose = lambda: zip(xs, closes)
+        openclose = lambda: zip(opens, closes)
 
         colord = {True: self.colorup, False: self.colordown}
         colors = [colord[open < close] for open, close in openclose()]
@@ -471,7 +473,7 @@ class OHLCPlotHandler(object):
             openticks,
             colors=colors,
             antialiaseds=useaa,
-            linewidths=tlw,
+            linewidths=lw,
             label='_nolegend',
             **kwargs)
 
@@ -484,7 +486,7 @@ class OHLCPlotHandler(object):
             closeticks,
             colors=colors,
             antialiaseds=useaa,
-            linewidths=tlw,
+            linewidths=lw,
             label='_nolegend',
             **kwargs)
 

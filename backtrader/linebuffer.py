@@ -160,11 +160,7 @@ class LineBuffer(LineSingle):
         return len(self.array) - self.extension
 
     def __getitem__(self, ago):
-        offset = self.idx + ago
-        if len(self.array) >= offset:
-            return self.array[offset]
-        else:
-            return None
+        return self.array[self.idx + ago]
 
     def get(self, ago=0, size=1):
         ''' Returns a slice of the array relative to *ago*
